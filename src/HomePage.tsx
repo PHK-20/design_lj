@@ -6,6 +6,7 @@ function HomePage() {
   const [hoveredTag, setHoveredTag] = useState(null);
   const [showHoverPicEffect, setShowHoverPicEffect] = useState(false);
   const experienceRef = useRef(null);
+  const portfolioRef = useRef(null);
   const scrollToAbout = () => {
     if (aboutRef.current) {
       aboutRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -16,6 +17,11 @@ function HomePage() {
   const scrollToExperience = () => {
     if (experienceRef.current) {
       experienceRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  const scrollToPortfolio = () => {
+    if (portfolioRef.current) {
+      portfolioRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
   return (
@@ -137,6 +143,7 @@ function HomePage() {
                 e.currentTarget.style.transform = 'scale(1)';
                 e.currentTarget.style.opacity = '0.9';
               }}
+              onClick={scrollToPortfolio}
             >
               <div style={{ fontSize: 34, fontWeight: 600, marginBottom: 8 }}>03</div>
               <div style={{ fontSize: 22, fontWeight: 600, margin: '6px 0 18px 0' }} translate="no">UX Portfolio</div>
@@ -198,7 +205,7 @@ function HomePage() {
             </div>
             <div style={{ display: 'flex', marginLeft: 80, position: 'relative', width: 290, height: 220 }}>
               <img
-                src="/placeholder-home.jpg"
+                src="/avatar6.jpg"
                 alt="占位图"
                 style={{
                   width: 260,
@@ -215,7 +222,7 @@ function HomePage() {
                 }}
               />
               <img
-                src="/placeholder-home2.jpg"
+                src="/avatar7.jpg"
                 alt="占位图2"
                 style={{
                   width: 260,
@@ -264,15 +271,15 @@ function HomePage() {
                     setHoveredTag(null);
                     setShowHoverPicEffect(false);
                   }}
-                >🐱 有一只性格非常可爱的小猫！
+                >🐱 有一只性格非常好且可爱的小猫！
                   {hoveredTag === 1 && (
-                    <div style={{ position: 'absolute', top: -120, right: -120, width: 290, height: 220, zIndex: 10, transform: 'rotate(30deg) scale(0.9)', transition: 'transform 0.6s cubic-bezier(0.22,1,0.36,1)' }}>
+                    <div style={{ position: 'absolute', top: -90, right: -90, width: 230, height: 160, zIndex: 10, transform: 'rotate(30deg) scale(0.9)', transition: 'transform 0.6s cubic-bezier(0.22,1,0.36,1)' }}>
                       <img
-                        src="/placeholder3.jpg"
+                        src="/avatar8.jpg"
                         alt="占位图3"
                         style={{
-                          width: 130,
-                          height: 100,
+                          width: 104,
+                          height: 80,
                           objectFit: 'cover',
                           borderRadius: 12,
                           position: 'absolute',
@@ -285,11 +292,11 @@ function HomePage() {
                         }}
                       />
                       <img
-                        src="/placeholder4.jpg"
+                        src="/avatar9.jpg"
                         alt="占位图4"
                         style={{
-                          width: 130,
-                          height: 100,
+                          width: 104,
+                          height: 80,
                           objectFit: 'cover',
                           borderRadius: 12,
                           position: 'absolute',
@@ -298,7 +305,7 @@ function HomePage() {
                           boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
                           transition: 'transform 0.6s cubic-bezier(0.22,1,0.36,1), left 0.6s cubic-bezier(0.22,1,0.36,1)',
                           transform: showHoverPicEffect ? 'rotate(15deg)' : 'rotate(0deg)',
-                          left: showHoverPicEffect ? 120 : 0
+                          left: showHoverPicEffect ? 100 : 0
                         }}
                       />
                     </div>
@@ -374,7 +381,7 @@ function HomePage() {
                   {hoveredTag === 3 && (
                     <div style={{ position: 'absolute', top: -120, right: -120, width: 290, height: 220, zIndex: 10, transform: 'rotate(30deg) scale(0.9)', transition: 'transform 0.6s cubic-bezier(0.22,1,0.36,1)' }}>
                       <img
-                        src="/placeholder3.jpg"
+                        src="/avatar10.jpg"
                         alt="占位图3"
                         style={{
                           width: 130,
@@ -391,7 +398,7 @@ function HomePage() {
                         }}
                       />
                       <img
-                        src="/placeholder4.jpg"
+                        src="/avatar11.jpg"
                         alt="占位图4"
                         style={{
                           width: 130,
@@ -429,7 +436,7 @@ function HomePage() {
               <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 18 }}>教育经历</div>
               <div style={{ fontSize: 17, marginBottom: 8 }}>[本科] 湖南科技大学 — 产品设计专业 <span style={{ float: 'right', color: '#888', fontWeight: 400 }}>2019.09–2023.06</span></div>
               <div style={{ fontSize: 17, marginBottom: 8 }}>[硕士] 湖南科技大学 — 艺术设计专业 <span style={{ float: 'right', color: '#888', fontWeight: 400 }}>2023.09–2026.06</span></div>
-              <div style={{ fontSize: 15, color: '#555', marginTop: 12, lineHeight: 1.7 }}>[荣誉] 湖南省大学生工业设计竞赛二等奖*2，湖南省研究生创新设计大赛二、三等奖，未来设计师·全国高校数字艺术设计大赛三等奖，实用新型专利2项，外观设计专利1项…</div>
+              <div style={{ fontSize: 17, marginBottom: 8 }}>[荣誉] 湖南省大学生工业设计竞赛二等奖*2，湖南省研究生创新设计大赛二、三等奖，未来设计师·全国高校数字艺术设计大赛三等奖，实用新型专利2项，外观设计专利1项…</div>
             </div>
             {/* 右侧图片 */}
             <div style={{ width: 220, height: 173, marginLeft: 32, borderRadius: 16, background: 'repeating-linear-gradient(45deg,#eee 0 10px,#fff 10px 20px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -448,9 +455,9 @@ function HomePage() {
               </div>
               <div style={{ display: 'flex', flexDirection: 'row', width: '100%', marginTop: 8, alignItems: 'flex-start' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 20, width: 80 }}>
-                  <span style={{ background: '#ffe066', color: '#222', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>TO B</span>
-                  <span style={{ background: '#e3f0ff', color: '#2476ff', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>数据平台</span>
-                  <span style={{ background: '#e3f0ff', color: '#2476ff', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>体验优化</span>
+                  <span style={{ background: '#FFF3C0', color: '#222222', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>TO B</span>
+                  <span style={{ background: '#FFF3C0', color: '#222222', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>数据平台</span>
+                  <span style={{ background: '#FFF3C0', color: '#222222', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>体验优化</span>
                 </div>
                 <div style={{ width: 'auto', height: 181, borderRadius: 10, background: 'repeating-linear-gradient(45deg,#eee 0 10px,#fff 10px 20px)', marginLeft: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
                   <img src="/placeholder-exp1.png" alt="实习1图片" style={{ height: 181, width: 'auto', opacity: 0.5 }} />
@@ -467,9 +474,9 @@ function HomePage() {
               </div>
               <div style={{ display: 'flex', flexDirection: 'row', width: '100%', marginTop: 8, alignItems: 'flex-start' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 20, width: 80 }}>
-                  <span style={{ background: '#e3f0ff', color: '#2476ff', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>TO C</span>
-                  <span style={{ background: '#e3f0ff', color: '#2476ff', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>用户增长</span>
-                  <span style={{ background: '#e3f0ff', color: '#2476ff', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>设计探索</span>
+                  <span style={{ background: '#e3f0ff', color: '#222222', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>TO C</span>
+                  <span style={{ background: '#e3f0ff', color: '#222222', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>用户增长</span>
+                  <span style={{ background: '#e3f0ff', color: '#222222', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>设计探索</span>
                 </div>
                 <div style={{ width: 'auto', height: 181, borderRadius: 10, background: 'repeating-linear-gradient(45deg,#eee 0 10px,#fff 10px 20px)', marginLeft: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
                   <img src="/placeholder-exp2.png" alt="实习2图片" style={{ height: 181, width: 'auto', opacity: 0.5 }} />
@@ -486,9 +493,9 @@ function HomePage() {
               </div>
               <div style={{ display: 'flex', flexDirection: 'row', width: '100%', marginTop: 8, alignItems: 'flex-start' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 20, width: 80 }}>
-                  <span style={{ background: '#e3f0ff', color: '#2476ff', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>TO E</span>
-                  <span style={{ background: '#e3f0ff', color: '#2476ff', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>办公平台</span>
-                  <span style={{ background: '#e3f0ff', color: '#2476ff', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>体验升级</span>
+                  <span style={{ background: '#e3f0ff', color: '#222222', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>TO E</span>
+                  <span style={{ background: '#e3f0ff', color: '#222222', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>办公平台</span>
+                  <span style={{ background: '#e3f0ff', color: '#222222', borderRadius: 6, padding: '2px 12px', fontSize: 14, marginBottom: 0, width: 80, display: 'inline-block', textAlign: 'center', height: 47, lineHeight: '47px' }}>体验升级</span>
                 </div>
                 <div style={{ width: 'auto', height: 181, borderRadius: 10, background: 'repeating-linear-gradient(45deg,#eee 0 10px,#fff 10px 20px)', marginLeft: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
                   <img src="/placeholder-exp3.png" alt="实习3图片" style={{ height: 181, width: 'auto', opacity: 0.5 }} />
@@ -499,30 +506,37 @@ function HomePage() {
         </div>
       </div>
       {/* 作品集区块 */}
-      <div style={{ minHeight: '100vh', background: "url('/avatar5.jpg') center center / cover no-repeat", padding: '40px 0 0 0' }}>
-        <div style={{ paddingLeft: 40 }}>
-          <h1 style={{ fontSize: 40, fontWeight: 700, marginBottom: 12 }}>作品集</h1>
-          <h2 style={{ fontSize: 28, fontWeight: 500, marginBottom: 24 }}>UX Portfolio</h2>
-          <div style={{ display: 'flex', gap: 48, flexWrap: 'wrap' }}>
-            {/* 作品1 */}
-            <div style={{ background: '#f5f5f5', borderRadius: 18, width: 320, padding: 24, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', marginBottom: 32 }}>
-              <img src="/portfolio1.jpg" alt="作品1" style={{ width: '100%', height: 160, objectFit: 'cover', borderRadius: 12, marginBottom: 16 }} />
-              <div style={{ fontSize: 20, fontWeight: 600, marginBottom: 8 }}>智能家居App体验优化</div>
-              <div style={{ fontSize: 15, color: '#666' }}>为智能家居App设计全新交互体验，提升用户满意度。</div>
+      <div ref={portfolioRef} style={{ minHeight: '100vh', background: "url('/avatar5.jpg') center center / cover no-repeat", padding: '40px 0 0 0', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ display: 'block', position: 'relative', zIndex: 2, width: '100%' }}>
+          <h1 style={{ fontSize: 40, fontWeight: 700, marginBottom: 32, marginLeft: 40 }}>
+            <span style={{ color: '#222' }}>UX </span>
+            <span style={{ color: '#2476ff' }}>Portfolio</span>
+          </h1>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            {/* 左侧图片占位 */}
+            <div style={{ width: 360, height: 226, background: '#e0e0e0', borderRadius: 16, marginRight: 122, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: 'rotate(-15deg) translateY(-40px)' }}>
+              <img src="/portfolio-placeholder.png" alt="作品图片占位" style={{ width: '90%', height: '100%', objectFit: 'cover', borderRadius: 12, opacity: 0.7 }} />
             </div>
-            {/* 作品2 */}
-            <div style={{ background: '#f5f5f5', borderRadius: 18, width: 320, padding: 24, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', marginBottom: 32 }}>
-              <img src="/portfolio2.jpg" alt="作品2" style={{ width: '100%', height: 160, objectFit: 'cover', borderRadius: 12, marginBottom: 16 }} />
-              <div style={{ fontSize: 20, fontWeight: 600, marginBottom: 8 }}>校园活动平台UI重构</div>
-              <div style={{ fontSize: 15, color: '#666' }}>主导校园活动平台的UI重构，提升视觉一致性和易用性。</div>
+            {/* 中间白色卡片 */}
+            <div style={{ background: '#fff', borderRadius: 20, boxShadow: '0 4px 24px rgba(0,0,0,0.08)', padding: 20, width: 400, height: 439, display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 0 }}>
+              <div style={{ width: 360, height: 226, background: '#e0e0e0', borderRadius: 16, marginBottom: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <img src="/portfolio-placeholder.png" alt="作品图片占位" style={{ width: '90%', height: '100%', objectFit: 'cover', borderRadius: 12, opacity: 0.7 }} />
+              </div>
+              <span style={{ background: '#e3f0ff', color: '#222', fontSize: 20, fontWeight: 500, borderRadius: 18, padding: '6px 28px', marginBottom: 18, display: 'inline-block' }}>抖音-功能优化</span>
+              <div style={{ fontSize: 16, color: '#222', textAlign: 'left', width: '100%', lineHeight: 1.7 }}>
+                这里为作品内容详细介绍这里为作品内容详细介绍这里为作品内容详细介绍这里为作品内容详细介绍这里为作品内容详细介绍这里为作品内容详细介绍
+              </div>
             </div>
-            {/* 作品3 */}
-            <div style={{ background: '#f5f5f5', borderRadius: 18, width: 320, padding: 24, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', marginBottom: 32 }}>
-              <img src="/portfolio3.jpg" alt="作品3" style={{ width: '100%', height: 160, objectFit: 'cover', borderRadius: 12, marginBottom: 16 }} />
-              <div style={{ fontSize: 20, fontWeight: 600, marginBottom: 8 }}>健康管理小程序设计</div>
-              <div style={{ fontSize: 15, color: '#666' }}>设计健康管理小程序，关注用户健康数据可视化与交互。</div>
+            {/* 右侧图片占位 */}
+            <div style={{ width: 360, height: 226, background: '#e0e0e0', borderRadius: 16, marginLeft: 122, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: 'rotate(15deg) translateY(-40px)' }}>
+              <img src="/portfolio-placeholder.png" alt="作品图片占位" style={{ width: '90%', height: '100%', objectFit: 'cover', borderRadius: 12, opacity: 0.7 }} />
             </div>
           </div>
+          {/* 切换按钮 */}
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 78, marginTop: 52 }}>
+              <button style={{ width: 48, height: 48, borderRadius: '50%', background: '#eee', border: 'none', fontSize: 28, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>&larr;</button>
+              <button style={{ width: 48, height: 48, borderRadius: '50%', background: '#eee', border: 'none', fontSize: 28, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>&rarr;</button>
+            </div>
         </div>
       </div>
     </>
