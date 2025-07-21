@@ -1,4 +1,23 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+
+// 在文件顶部插入CSS keyframes
+const bounceStyle = `
+@keyframes bounceUp {
+  0% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-30px) scale(1.06); }
+  60% { transform: translateY(-18px) scale(1.03); }
+  100% { transform: translateY(0) scale(1); }
+}
+.bounce-up {
+  animation: bounceUp 0.5s cubic-bezier(0.22,1,0.36,1);
+}
+`;
+if (typeof document !== 'undefined' && !document.getElementById('bounce-style')) {
+  const style = document.createElement('style');
+  style.id = 'bounce-style';
+  style.innerHTML = bounceStyle;
+  document.head.appendChild(style);
+}
 
 function HomePage() {
   const aboutRef = useRef(null);
@@ -7,22 +26,136 @@ function HomePage() {
   const [showHoverPicEffect, setShowHoverPicEffect] = useState(false);
   const experienceRef = useRef(null);
   const portfolioRef = useRef(null);
+  const typingAnimTriggered = useRef(false);
+  // 打字机动画相关state
+  const [aboutTitleDisplay, setAboutTitleDisplay] = useState('');
+  const [aboutDescDisplay, setAboutDescDisplay] = useState('');
+  const aboutTitle = 'Hi，我是刘晶\n一个不太能吃辣的fú南人';
+  const aboutDesc = '湖南科技大学艺术设计硕士在读（2026 届毕业生），有三段大厂用户体验设计实习经历；熟练掌握各类设计软件，对事物保有好奇心，上进努力，持续在设计领域精进......';
+  const [expTitleDisplay, setExpTitleDisplay] = useState('');
+  const expTitle = 'My Education & Experience';
+  const expTypingAnimTriggered = useRef(false);
+  // 监听ref进入视口或点击卡片1时触发动画
+  useEffect(() => {
+    const handleScroll = () => {
+      if (aboutRef.current && !typingAnimTriggered.current) {
+        const rect = aboutRef.current.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          startTyping();
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  const startTyping = () => {
+    if (typingAnimTriggered.current) return;
+    typingAnimTriggered.current = true;
+    if (aboutTitleDisplay.length === aboutTitle.length && aboutDescDisplay.length === aboutDesc.length) return;
+    setAboutTitleDisplay('');
+    setAboutDescDisplay('');
+    let i = 0, j = 0;
+    const typeTitle = () => {
+      if (i <= aboutTitle.length) {
+        setAboutTitleDisplay(aboutTitle.slice(0, i));
+        i++;
+        setTimeout(typeTitle, 36);
+      } else {
+        typeDesc();
+      }
+    };
+    const typeDesc = () => {
+      if (j <= aboutDesc.length) {
+        setAboutDescDisplay(aboutDesc.slice(0, j));
+        j++;
+        setTimeout(typeDesc, 18);
+      }
+    };
+    typeTitle();
+  };
+  // 监听经验区块进入视口或点击卡片2时触发动画
+  useEffect(() => {
+    const handleScrollExp = () => {
+      if (experienceRef.current && !expTypingAnimTriggered.current) {
+        const rect = experienceRef.current.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          startExpTyping();
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScrollExp);
+    return () => window.removeEventListener('scroll', handleScrollExp);
+  }, []);
+  const startExpTyping = () => {
+    if (expTypingAnimTriggered.current) return;
+    expTypingAnimTriggered.current = true;
+    let i = 0;
+    const typeExpTitle = () => {
+      if (i <= expTitle.length) {
+        setExpTitleDisplay(expTitle.slice(0, i));
+        i++;
+        setTimeout(typeExpTitle, 36);
+      }
+    };
+    typeExpTitle();
+  };
   const scrollToAbout = () => {
     if (aboutRef.current) {
       aboutRef.current.scrollIntoView({ behavior: 'smooth' });
       setShowPicEffect(false);
       setTimeout(() => setShowPicEffect(true), 400); // 延迟以配合滚动
+      setTimeout(startTyping, 500); // 滚动后触发打字机
     }
   };
   const scrollToExperience = () => {
     if (experienceRef.current) {
       experienceRef.current.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(startExpTyping, 500);
     }
   };
   const scrollToPortfolio = () => {
     if (portfolioRef.current) {
       portfolioRef.current.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isBouncing, setIsBouncing] = useState(false);
+
+  const portfolioItems = [
+    {
+      id: 1,
+      image: '/avatar17.jpg',
+      title: '抖音-功能优化',
+      description: '这里为作品内容详细介绍这里为作品内容详细介绍这里为作品内容详细介绍这里为作品内容详细介绍这里为作品内容详细介绍这里为作品内容详细介绍'
+    },
+    {
+      id: 2,
+      image: '/avatar18.jpg',
+      title: '作品集项目二',
+      description: '这是项目二的详细描述，用于演示轮播切换功能...'
+    },
+    {
+      id: 3,
+      image: '/avatar19.jpg',
+      title: '作品集项目三',
+      description: '这是项目三的详细描述，用于演示轮播切换功能...'
+    }
+  ];
+
+  const handleNext = () => {
+    setIsBouncing(true);
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % portfolioItems.length);
+      setIsBouncing(false);
+    }, 500);
+  };
+
+  const handlePrev = () => {
+    setIsBouncing(true);
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) => (prevIndex - 1 + portfolioItems.length) % portfolioItems.length);
+      setIsBouncing(false);
+    }, 500);
   };
   return (
     <>
@@ -194,13 +327,22 @@ function HomePage() {
       <div ref={aboutRef} style={{ minHeight: '100vh', background: "url('/avatar5.jpg') center center / cover no-repeat", padding: '40px 0 0 0' }}>
         <div style={{ paddingLeft: 40, marginTop: 70 }}>
           <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-            <div>
-              <h2 style={{ fontSize: 40, fontWeight: 700, marginBottom: 12 }}>
-                Hi，我是刘晶<br />
-                一个不太能吃辣的fú南人
-              </h2>
-              <div style={{ fontSize: 18, marginBottom: 50, maxWidth: 600 }}>
-                湖南科技大学艺术设计硕士在读（2026 届毕业生），有三段大厂用户体验设计实习经历；熟练掌握各类设计软件，对事物保有好奇心，上进努力，持续在设计领域精进......
+            <div style={{ position: 'relative' }}>
+              <div style={{ visibility: 'hidden' }}>
+                <h2 style={{ fontSize: 40, fontWeight: 700, marginBottom: 12, whiteSpace: 'pre-line' }}>
+                  {aboutTitle}
+                </h2>
+                <div style={{ fontSize: 18, marginBottom: 50, maxWidth: 600 }}>
+                  {aboutDesc}
+                </div>
+              </div>
+              <div style={{ position: 'absolute', top: 0, left: 0 }}>
+                <h2 style={{ fontSize: 40, fontWeight: 700, marginBottom: 12, whiteSpace: 'pre-line' }}>
+                  {aboutTitleDisplay}
+                </h2>
+                <div style={{ fontSize: 18, marginBottom: 50, maxWidth: 600 }}>
+                  {aboutDescDisplay}
+                </div>
               </div>
             </div>
             <div style={{ display: 'flex', marginLeft: 80, position: 'relative', width: 290, height: 220 }}>
@@ -426,8 +568,8 @@ function HomePage() {
       <div ref={experienceRef} style={{ minHeight: '100vh', background: "url('/avatar5.jpg') center center / cover no-repeat", padding: '40px 0 0 0' }}>
         <div style={{ paddingLeft: 40, paddingRight: 40, maxWidth: 1400, margin: '0 auto', marginTop: -8 }}>
           <h1 style={{ fontSize: 40, fontWeight: 700, marginBottom: 22 }}>
-            <span style={{ color: '#222' }}>My </span>
-            <span style={{ color: '#2476ff' }}>Education & Experience</span>
+            <span style={{ color: '#222' }}>{expTitleDisplay || 'My '}</span>
+            <span style={{ color: '#2476ff' }}>{expTitleDisplay ? '' : 'Education & Experience'}</span>
           </h1>
           {/* 教育经历区块 */}
           <div style={{ background: '#fff', borderRadius: 24, boxShadow: '0 4px 24px rgba(0,0,0,0.06)', padding: 26, display: 'flex', alignItems: 'flex-start', marginBottom: 0 }}>
@@ -513,29 +655,29 @@ function HomePage() {
             <span style={{ color: '#2476ff' }}>Portfolio</span>
           </h1>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-            {/* 左侧图片占位 */}
-            <div style={{ width: 360, height: 226, background: '#e0e0e0', borderRadius: 16, marginRight: 122, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: 'rotate(-15deg) translateY(-40px)' }}>
-              <img src="/portfolio-placeholder.png" alt="作品图片占位" style={{ width: '90%', height: '100%', objectFit: 'cover', borderRadius: 12, opacity: 0.7 }} />
+            {/* 左侧图片卡片 */}
+            <div style={{ width: 360, height: 226, background: '#e0e0e0', borderRadius: 16, marginRight: 122, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: 'rotate(-15deg) translateY(-40px)', opacity: 0.6 }}>
+              <img src={portfolioItems[(currentIndex - 1 + portfolioItems.length) % portfolioItems.length].image} alt="作品图片" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: 12 }} />
             </div>
             {/* 中间白色卡片 */}
-            <div style={{ background: '#fff', borderRadius: 20, boxShadow: '0 4px 24px rgba(0,0,0,0.08)', padding: 20, width: 400, height: 439, display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 0 }}>
-              <div style={{ width: 360, height: 226, background: '#e0e0e0', borderRadius: 16, marginBottom: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <img src="/portfolio-placeholder.png" alt="作品图片占位" style={{ width: '90%', height: '100%', objectFit: 'cover', borderRadius: 12, opacity: 0.7 }} />
+            <div className={isBouncing ? 'bounce-up' : ''} style={{ background: '#fff', borderRadius: 20, boxShadow: '0 4px 24px rgba(0,0,0,0.08)', padding: 20, width: 400, height: 439, display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 0, zIndex: 10 }}>
+              <div className={isBouncing ? 'bounce-up' : ''} style={{ width: 360, height: 226, background: '#e0e0e0', borderRadius: 16, marginBottom: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <img src={portfolioItems[currentIndex].image} alt="作品图片" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 12 }} />
               </div>
-              <span style={{ background: '#e3f0ff', color: '#222', fontSize: 20, fontWeight: 500, borderRadius: 18, padding: '6px 28px', marginBottom: 18, display: 'inline-block' }}>抖音-功能优化</span>
+              <span style={{ background: '#e3f0ff', color: '#222', fontSize: 20, fontWeight: 500, borderRadius: 18, padding: '6px 28px', marginBottom: 18, display: 'inline-block' }}>{portfolioItems[currentIndex].title}</span>
               <div style={{ fontSize: 16, color: '#222', textAlign: 'left', width: '100%', lineHeight: 1.7 }}>
-                这里为作品内容详细介绍这里为作品内容详细介绍这里为作品内容详细介绍这里为作品内容详细介绍这里为作品内容详细介绍这里为作品内容详细介绍
+                {portfolioItems[currentIndex].description}
               </div>
             </div>
-            {/* 右侧图片占位 */}
-            <div style={{ width: 360, height: 226, background: '#e0e0e0', borderRadius: 16, marginLeft: 122, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: 'rotate(15deg) translateY(-40px)' }}>
-              <img src="/portfolio-placeholder.png" alt="作品图片占位" style={{ width: '90%', height: '100%', objectFit: 'cover', borderRadius: 12, opacity: 0.7 }} />
+            {/* 右侧图片卡片 */}
+            <div style={{ width: 360, height: 226, background: '#e0e0e0', borderRadius: 16, marginLeft: 122, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: 'rotate(15deg) translateY(-40px)', opacity: 0.6 }}>
+              <img src={portfolioItems[(currentIndex + 1) % portfolioItems.length].image} alt="作品图片" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: 12 }} />
             </div>
           </div>
           {/* 切换按钮 */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: 78, marginTop: 52 }}>
-              <button style={{ width: 48, height: 48, borderRadius: '50%', background: '#eee', border: 'none', fontSize: 28, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>&larr;</button>
-              <button style={{ width: 48, height: 48, borderRadius: '50%', background: '#eee', border: 'none', fontSize: 28, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>&rarr;</button>
+              <button onClick={handlePrev} style={{ width: 48, height: 48, borderRadius: '50%', background: '#fff', border: 'none', fontSize: 28, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>&larr;</button>
+              <button onClick={handleNext} style={{ width: 48, height: 48, borderRadius: '50%', background: '#fff', border: 'none', fontSize: 28, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>&rarr;</button>
             </div>
         </div>
       </div>
